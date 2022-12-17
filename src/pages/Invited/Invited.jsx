@@ -4,7 +4,9 @@ import './invited.css'
 
 const Invited = () => {
     return (
-        <div>Invited</div>
+        <div>
+            Invited
+        </div>
     )
 }
 

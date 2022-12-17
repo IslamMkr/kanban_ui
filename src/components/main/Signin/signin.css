@@ -1,13 +1,18 @@
 .create-account {
-    width: fit-content;
+    width: 100%;
     padding: 30px;
-
-    border: 1px solid rgb(202, 202, 202);
-    border-radius: 10px;
 }
 
 .create-account h2 {
     margin-top: 0;
+}
+
+#btn-create-account, .textfield {
+    width: 80%;
+}
+
+#btn-create-account {
+    height: 40px;
 }
 
 .create-account-field {

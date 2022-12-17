@@ -1,0 +1,72 @@
+.welcome {
+    width: 100vw;
+    height: 83vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.presentation {
+    width: 60%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0px 20px;
+    background-color: #0582ca;
+    color: white;
+}
+
+.login-signin {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0px 20px;
+}
+
+.login-signin-area {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    padding: 0px 20px;
+}
+
+.login-signin-area p {
+    width: 300px;
+    color: rgb(133, 132, 132);
+}
+
+#create-account {
+    width: 100%;
+}
+
+#create-account p {
+    padding: 0;
+    margin: 5px;
+}
+
+#btn-instruction:hover {
+    cursor: pointer;
+}
+
+.text {
+    width: 80%;
+}
+
+.presentation img {
+    width: 60%;
+    padding: 50px;
+}

@@ -6,7 +6,7 @@ import AuthService from '../../../services/AuthService'
 
 import './header.css'
 
-const Header = ({ logout }) => {
+const Header = ({ isAuth, logout }) => {
 
     const disconnect = () => {
         console.log("Header\t: handling logout")
@@ -20,22 +20,38 @@ const Header = ({ logout }) => {
             </div>
 
             <nav>
-                <ul className='header-links'>
-                    <li >
-                        <Link to="/home">MES KANBANS</Link>
-                    </li>
-                    <li>
-                        <Link to="/invited">KANBANS INVITES</Link>
-                    </li>
-                </ul>
+                {
+                    isAuth ? 
+
+                    <ul className='header-links'>
+                        <li >
+                            <Link to="/home/">MES KANBANS</Link>
+                        </li>
+                        <li>
+                            <Link to="/invited/">KANBANS INVITES</Link>
+                        </li>
+                    </ul> 
+                    :
+                    <ul className='header-links'>
+                        <li >
+                            <Link to="/">ACCUEIL</Link>
+                        </li>
+                        <li >
+                            <Link to="/kanbans/">KANBANS</Link>
+                        </li>
+                    </ul>
+                }
             </nav>
 
-            <Button
-                id='logout-btn'
-                variant='outlined'
-                onClick={disconnect}>
-                Déconncter
-            </Button>
+            {
+                isAuth &&
+                <Button
+                    id='logout-btn'
+                    variant='outlined'
+                    onClick={disconnect}>
+                    Déconncter
+                </Button>
+            }
         </div>
     )
 }

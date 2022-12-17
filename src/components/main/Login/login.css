@@ -1,9 +1,6 @@
 .login {
-    width: fit-content;
-    padding: 30px;
-
-    border: 1px solid rgb(202, 202, 202);
-    border-radius: 10px;
+    width: 100%;
+    padding-top: 30px;
 }
 
 .login h2 {
@@ -14,6 +11,19 @@
     margin-bottom: 20px;
 }
 
-.textfield, #error {
-    width: 300px;
+.textfield, #error, #btn {
+    width: 80%;
+}
+
+#btn {
+    height: 40px;
+    margin-top: 20px;
+}
+
+.login #error {
+    color: red;
+    text-align: left;
+    font-size: .8rem;
+    font-weight: bold;
+    margin-bottom: 20px;
 }

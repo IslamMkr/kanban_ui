@@ -5,38 +5,31 @@ import AuthService from '../../../services/AuthService'
 
 import "./login.css"
 
-const Login = (/*{ authentification }*/) => {
+const Login = ({ login }) => {
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
     const [error, setError] = useState(false)
-    const [errorMsg, setErrorMsg] = useState("Nom d'utilisateur ou mot de passe incorrect!")
-
+    
     const connectionHandler = () => {
-        let authData = undefined
-
         AuthService.login(username, password)
             .then(res => {
-                authData = res
+                if (res === undefined) {
+                    setError(true)
+                } else {
+                    setError(false)
+                    login()
+                }
             })
             .catch(err => {
-                authData = err
+                setError(true)
+                console.log(err)
             })
-
-        console.log(authData)
-
-        if (authData === undefined) {
-            setError(true)
-        } else {
-            setError(false)
-        }
-        //authentification()
     }
 
     return (
         <div className='login'>
-            <h2>Connexion</h2>
             <div className="login-field">
                 <TextField 
                     className='textfield' 
@@ -56,11 +49,13 @@ const Login = (/*{ authentification }*/) => {
             {
                 error &&
                 <div id="error">
-                    <p>{errorMsg}</p>
+                    <p>Nom d'utilisateur ou mot de passe incorrect !</p>
                 </div>
             }
 
-            <Button variant='outlined' 
+            <Button 
+                    id='btn'
+                    variant='outlined' 
                     color="primary" 
                     disableElevation
                     onClick={connectionHandler}>

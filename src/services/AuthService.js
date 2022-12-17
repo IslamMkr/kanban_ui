@@ -15,12 +15,15 @@ class AuthService {
         return this.axiosInstance.post("login", params)
         .then (res => {
             if (res.data.accessToken) {
-                localStorage.setItem("auth-data", JSON.stringify(res.body))
+                localStorage.setItem("auth-data", JSON.stringify(res.data))
             }
+
+            //console.log("auth service ok : ", res.data)
 
             return res.data
         }).catch (err => {
-            return undefined
+            //console.log("auth service bad : ", err)
+            console.log(err)
         }) 
     }
 
@@ -29,12 +32,13 @@ class AuthService {
     }
 
     signin = (user) => {
-        return this.axiosInstance.post("save", user)
+        return this.axiosInstance.post("api/v1/users/save", user)
         .then (res => {
-            console.log(res.data)
+            return res
         })
         .catch (err => {
             console.log(err)
+            return err
         }) 
     }
     
