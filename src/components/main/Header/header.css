@@ -1,0 +1,58 @@
+.header {
+    height: 80px;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    padding: 0px 100px;
+
+    background: #026AA7;
+    color: rgb(252, 252, 252);
+}
+
+.header-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+nav ul {
+    width: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+nav li {
+    font-size: 0.9em;
+    list-style-type: none;
+    list-style: none;
+    text-decoration: none;
+}
+
+nav li:hover {
+    font-weight: bold;
+    color: #313131;
+}
+
+.header-links a {
+    list-style-type: none;
+    list-style: none;
+    text-decoration: none;
+
+    color: rgb(252, 252, 252);
+}
+
+.header #logout-btn {
+    background-color: rgb(252, 252, 252);
+    border: 1px solid #026AA7;
+}
+
+.header #logout-btn:hover {
+    background-color: #026AA7;
+    border: 1px solid rgb(252, 252, 252);
+    color: rgb(252, 252, 252)
+}
