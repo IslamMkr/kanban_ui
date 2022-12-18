@@ -2,26 +2,41 @@ import React from 'react'
 
 import './project.css'
 
-const Project = () => {
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
+import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
+
+const Project = ({ kanban, clicked }) => {
+
+    const handleClick = () => {
+        clicked()
+    }
+
     return (
         <article className='card'>
             <div className="card-project">
-                <img src="#" alt="" />
-                
-                <div>
-                    <span className='card-author'>
-                        <i className='ri-user-line' /> Islam Mokrane
-                    </span>
-
-                    <span className='card-date'>
-                        <i className='ri-calendar-line' /> 12 Sep. 2022
-                    </span>
+                <div className='card-icon'>
+                    <PersonOutlineIcon id="icon" />
+                    <p>Islam Mokrane</p>
+                </div>
+                <div className="card-icon">
+                    <CalendarTodayIcon id="icon" />
+                    <p>12 Sept. 2023</p>
+                </div>
+                <div className="card-icon">
+                    <PeopleOutlineIcon id="icon" />
+                    <p>{kanban.members.length} Membres</p>
                 </div>
             </div>
 
             <div className="card-info">
-                <h2 className='card-title'>Projet universitaire - Kanban</h2>
-                <p className='card-description'>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text.</p>
+                <h4 className='card-title'>{kanban.title}</h4>
+                <p className='card-description'>{kanban.description}</p>
+                <div className="card-icon" id="see-more" onClick={handleClick}>
+                    <p>Voir plus</p>
+                    <ArrowRightAltOutlinedIcon id="icon" />
+                </div>
             </div>
         </article>
     )

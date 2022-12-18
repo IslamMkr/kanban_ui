@@ -1,6 +1,8 @@
 .create-account {
     width: 100%;
     padding: 30px;
+    
+    box-sizing: border-box;
 }
 
 .create-account h2 {
@@ -9,12 +11,15 @@
 
 #btn-create-account, .textfield {
     width: 80%;
+    box-sizing: border-box;
 }
 
 #btn-create-account {
     height: 40px;
+    box-sizing: border-box;
 }
 
 .create-account-field {
     margin-bottom: 20px;
+    box-sizing: border-box;
 }

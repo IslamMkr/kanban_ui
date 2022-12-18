@@ -1,6 +1,8 @@
 .login {
     width: 100%;
     padding-top: 30px;
+    
+    box-sizing: border-box;
 }
 
 .login h2 {
@@ -9,15 +11,18 @@
 
 .login-field {
     margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
 .textfield, #error, #btn {
     width: 80%;
+    box-sizing: border-box;
 }
 
 #btn {
     height: 40px;
     margin-top: 20px;
+    box-sizing: border-box;
 }
 
 .login #error {
@@ -26,4 +31,5 @@
     font-size: .8rem;
     font-weight: bold;
     margin-bottom: 20px;
+    box-sizing: border-box;
 }

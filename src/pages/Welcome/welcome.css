@@ -5,6 +5,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    box-sizing: border-box;
 }
 
 .presentation {
@@ -19,6 +21,8 @@
     padding: 0px 20px;
     background-color: #0582ca;
     color: white;
+
+    box-sizing: border-box;
 }
 
 .login-signin {
@@ -31,6 +35,8 @@
     align-items: center;
 
     padding: 0px 20px;
+
+    box-sizing: border-box;
 }
 
 .login-signin-area {
@@ -42,20 +48,28 @@
     align-items: center;
     
     padding: 0px 20px;
+
+    box-sizing: border-box;
 }
 
 .login-signin-area p {
     width: 300px;
     color: rgb(133, 132, 132);
+
+    box-sizing: border-box;
 }
 
 #create-account {
     width: 100%;
+
+    box-sizing: border-box;
 }
 
 #create-account p {
     padding: 0;
     margin: 5px;
+
+    box-sizing: border-box;
 }
 
 #btn-instruction:hover {
@@ -64,9 +78,13 @@
 
 .text {
     width: 80%;
+
+    box-sizing: border-box;
 }
 
 .presentation img {
     width: 60%;
     padding: 50px;
+
+    box-sizing: border-box;
 }

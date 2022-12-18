@@ -5,6 +5,8 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  
+  box-sizing: border-box;
 }
 
 footer {
@@ -21,4 +23,6 @@ footer {
   color: rgb(252, 252, 252);
 
   margin-top: auto;
+  
+  box-sizing: border-box;
 }

@@ -37,9 +37,8 @@ const App = () => {
 
     return (
         <div className="App">
-            {
-                <Header isAuth={isAuth} logout={handleLogout} />
-            }
+            <Header isAuth={isAuth} logout={handleLogout} />
+            
             <Routes>
                 <Route exact path="/" element={ <Welcome login={() => handleLogin()} /> } />
                 <Route exact path="/kanbans" element= { <PublicKanbans /> } />

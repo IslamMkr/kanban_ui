@@ -26,7 +26,6 @@ const Signin = () => {
         setUsername("")
         setEmail("")
         setPassword("")
-        console.log("Here")
     }
 
     const accountCreationHandler = () => {
@@ -37,8 +36,6 @@ const Signin = () => {
             email: email,
             password: password
         }
-
-        console.log(user)
 
         AuthService.signin(user)
             .then(res => {

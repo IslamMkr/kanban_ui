@@ -6,7 +6,7 @@ class UserService {
 
     axiosUserInstance = axios.create({
         headers: {"Access-Control-Allow-Origin": "*"},
-        baseURL: process.env.URL_API_V1_USERS
+        baseURL: process.env.REACT_APP_URL_API_V1_USERS
     });
 
     getAllUsers = () => {
@@ -17,8 +17,14 @@ class UserService {
         return this.axiosUserInstance.get("/" + uid, { headers: authHeader() })
     }
 
+    getUserByUsername = (username) => {
+        return this.axiosUserInstance.get("/username/" + username, { headers: authHeader() })
+    }
+
     deleteUser = (uid) => {
         return this.axiosUserInstance.delete("delete/" + uid, { headers: authHeader() })
     }
 
 }
+
+export default new UserService()

@@ -10,12 +10,16 @@
 
     background: #026AA7;
     color: rgb(252, 252, 252);
+    
+    box-sizing: border-box;
 }
 
 .header-links {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+
+    box-sizing: border-box;
 }
 
 nav ul {
@@ -49,6 +53,7 @@ nav li:hover {
 .header #logout-btn {
     background-color: rgb(252, 252, 252);
     border: 1px solid #026AA7;
+    box-sizing: border-box;
 }
 
 .header #logout-btn:hover {

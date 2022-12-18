@@ -1,0 +1,45 @@
+.public-kanbans {
+    width: 100%;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    text-align: left;
+
+    padding: 50px 16%;
+}
+
+.kanbans {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+
+    gap: 20px;
+}
+
+@media screen and (min-width: 1000px) {
+    .public-kanbans {
+        padding: 50px 20%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .public-kanbans {
+        padding: 50px 10%;
+    }
+}
+
+@media screen and (min-width: 900px) {
+    .kanbans {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    .kanbans {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

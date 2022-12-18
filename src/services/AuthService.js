@@ -1,30 +1,32 @@
 import axios from "axios";
 
+import authHeader from "./AuthHeader";
 class AuthService {
 
     axiosInstance = axios.create({
         headers: {"Access-Control-Allow-Origin": "*"},
-        baseURL: "http://localhost:8080/"
+        baseURL: 'http://localhost:8080/'
     });
+
     login = (username, password) => {
         // Requires x-www-form-urlencoded data form
         const params = new URLSearchParams()
         params.append('username', username)
         params.append('password', password)
 
-        return this.axiosInstance.post("login", params)
-        .then (res => {
-            if (res.data.accessToken) {
-                localStorage.setItem("auth-data", JSON.stringify(res.data))
-            }
+        return this.axiosInstance.post("/login", params, { headers: authHeader() })
+            .then (res => {
+                if (res.data.accessToken) {
+                    localStorage.setItem("auth-data", JSON.stringify(res.data))
+                }
 
-            //console.log("auth service ok : ", res.data)
+                console.log("auth service ok : ", res.data)
 
-            return res.data
-        }).catch (err => {
-            //console.log("auth service bad : ", err)
-            console.log(err)
-        }) 
+                return res.data
+            }).catch (err => {
+                console.log("auth service bad : ", err)
+                console.log(err)
+            }) 
     }
 
     logout = () => {
@@ -32,7 +34,7 @@ class AuthService {
     }
 
     signin = (user) => {
-        return this.axiosInstance.post("api/v1/users/save", user)
+        return this.axiosInstance.post("api/v1/users/save", user, { headers: authHeader() })
         .then (res => {
             return res
         })

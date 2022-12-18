@@ -13,6 +13,8 @@ const Login = ({ login }) => {
     const [error, setError] = useState(false)
     
     const connectionHandler = () => {
+        console.log(username, password)
+        
         AuthService.login(username, password)
             .then(res => {
                 if (res === undefined) {
