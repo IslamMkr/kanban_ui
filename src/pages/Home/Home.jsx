@@ -1,25 +1,36 @@
 import React, { useState, useEffect } from 'react'
 
+import { useNavigate } from 'react-router-dom'
+
 import "./home.css"
 
 import AuthService from '../../services/AuthService'
 import UserService from "../../services/UserService"
 
 import ProfilPic from "../../assets/icons/man.png"
+import KanbanForm from '../../components/main/KanbanForm/KanbanForm'
 
 const Home = () => {
+    const navigate = useNavigate()
+
     const [user, setUser] = useState({})
 
     useEffect(() => {
         const authData = AuthService.authData()
 
-        UserService.getUserByUsername(authData.username)
-            .then(res => {
-                setUser(res.data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        if (authData === null) {
+            //console.log(authData)
+            navigate("/", { replace: true })
+        } else {
+            UserService.getUserByUsername(authData.username)
+                .then(res => {
+                    setUser(res.data)
+                    localStorage.setItem("user", JSON.stringify(res.data))
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
     }, [])
 
     return (
@@ -31,6 +42,8 @@ const Home = () => {
                     <p>{user.username}</p>
                 </div>
             </div>
+
+            <KanbanForm />
         </div>
     )
 }

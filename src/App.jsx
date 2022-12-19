@@ -21,6 +21,7 @@ const App = () => {
         setAuth(false)
         navigate("/", { replace: true })
     }
+    
     const handleLogin = () => {
         setAuth(true)
         navigate("/home/", { replace: true })
