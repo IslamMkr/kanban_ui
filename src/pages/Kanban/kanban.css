@@ -1,0 +1,64 @@
+.kanban {
+    width: 100%;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    align-items: left;
+    text-align: left;
+    text-align: left;
+
+    box-sizing: border-box;
+}
+
+.kanban-header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+
+    padding: 50px 19%;
+    
+    box-sizing: border-box;
+
+    background-color: white;
+    
+    box-shadow: 2px .8rem 1rem rgba(0, 0, 0, .025);
+}
+
+.kanban-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    gap: 6px;
+}
+
+.kanban-header h2, p {
+    margin: 0;
+    padding: 5px;
+}
+
+.kanban-header #description, #creator {
+    color: rgb(122, 122, 122);
+}
+
+.lists {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    
+    gap: 20px;
+    padding: 20px 19%;
+    
+    box-sizing: border-box;
+    
+    background-color: rgb(245, 245, 245);
+    
+    box-shadow: 2px .8rem 1rem rgba(0, 0, 0, .025);
+}

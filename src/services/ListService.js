@@ -13,6 +13,10 @@ class ListService {
         return this.axiosInstance.get(lid, authHeader)
     }
 
+    getKanbanLists = (kid) => {
+        return this.axiosInstance.get("kanban/" + kid, authHeader)
+    }
+
     saveList = (list) => {
         return this.axiosInstance.post("save", list, authHeader)
     }

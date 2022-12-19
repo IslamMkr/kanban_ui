@@ -42,11 +42,16 @@ const Home = () => {
             .then(res => {
                 setUser(res.data)
                 localStorage.setItem("user", JSON.stringify(res.data))
-                //console.log(res.data)
-                fetchUserKanbans(res.data.uid)
+                
+                if (res.data === '') {
+                    navigate("/")
+                } else {
+                    fetchUserKanbans(res.data.uid)
+                }
             })
             .catch(err => {
                 console.log("Home -> fetchUser -> failure : ", err)
+                navigate("/")
             })
     }
 
@@ -74,9 +79,12 @@ const Home = () => {
     }
 
     const goToKanbanPage = (kanban) => {
-        console.log(kanban)
-
-        navigate("/home/kanban/" + kanban.kid)
+        navigate("/home/kanban/" + kanban.kid, { 
+            replace: true,
+            state: {
+                kanban: kanban
+            }
+        })
     }
 
     return (
