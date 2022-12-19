@@ -7,18 +7,13 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 
-const Project = ({ kanban, clicked }) => {
-
-    const handleClick = () => {
-        clicked()
-    }
-
+const Project = ({ kanban, seeMore }) => {
     return (
         <article className='card'>
             <div className="card-project">
                 <div className='card-icon'>
                     <PersonOutlineIcon id="icon" />
-                    <p>Islam Mokrane</p>
+                    <p>{kanban.owner.firstname} {kanban.owner.lastname}</p>
                 </div>
                 <div className="card-icon">
                     <CalendarTodayIcon id="icon" />
@@ -33,7 +28,7 @@ const Project = ({ kanban, clicked }) => {
             <div className="card-info">
                 <h4 className='card-title'>{kanban.title}</h4>
                 <p className='card-description'>{kanban.description}</p>
-                <div className="card-icon" id="see-more" onClick={handleClick}>
+                <div className="card-icon" id="see-more" onClick={() => seeMore(kanban)}>
                     <p>Voir plus</p>
                     <ArrowRightAltOutlinedIcon id="icon" />
                 </div>

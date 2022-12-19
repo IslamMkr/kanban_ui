@@ -17,8 +17,9 @@ import ListIcon from '@mui/icons-material/List';
 import KanbanService from "../../../services/KanbanService"
 
 import './kanban-form.css'
+import ListService from '../../../services/ListService';
 
-const KanbanForm = () => {
+const KanbanForm = ({ notifyDataChanged, onClose }) => {
 
     const [user, setUser] = useState(null)
 
@@ -92,11 +93,31 @@ const KanbanForm = () => {
             .then(res => {
                 setSuccess(true)
                 resetFields()
+                saveLists(res.data.kid)
                 notifyKanbanAddedSuccessfuly()
             })
             .catch(err => {
                 console.log("failure : ", err)
             })
+    }
+
+    const saveLists = (kid) => {
+        lists.forEach(list => {
+            const newList = {
+                title: list.listname, 
+                kanban: {
+                    kid: kid
+                }
+            }
+
+            ListService.saveList(newList) 
+                .then(res => {
+                    console.log(res.data)
+                })
+                .catch(err => {
+                    console.log("KanbanForm -> saveLists -> failure : ", err)
+                })
+        })
     }
 
     const notifyKanbanAddedSuccessfuly = () => {
@@ -113,6 +134,8 @@ const KanbanForm = () => {
         }
 
         interval = setInterval(increment, 1000)
+
+        notifyDataChanged()
     }
 
     const resetFields = () => {
@@ -124,6 +147,11 @@ const KanbanForm = () => {
 
     return (
         <div className='kanban-form'>
+            <div className="kanban-form-header">
+                <h2>Créer un nouveau kanban</h2>
+                <ClearIcon className='icon icon-clear'
+                    onClick={() => onClose()} />
+            </div>
             <div className='kanban-form-field'>
                 <TextField 
                     className='textfield' 

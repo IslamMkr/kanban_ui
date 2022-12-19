@@ -3,7 +3,9 @@ const authHeader = () => {
 
     if (user && user.accessToken) {
         return {
-            Authorization: 'Bearer ' + user.accessToken
+            Authorization: 'Bearer ' + user.accessToken,
+            'Access-Control-Allow-Origin': 'http://localhost:3000',
+            'Access-Control-Allow-Credentials': 'true'
         }
     }
 

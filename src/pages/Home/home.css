@@ -48,11 +48,52 @@
         padding: 50px 18%;
     }
 }
+
 @media screen and (max-width: 600px) {
     .profil {
         padding: 50px 14%;
     }
 }
+
+.home-kanbans {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    
+    gap: 30px;
+    padding: 50px 19%;
+    
+    box-sizing: border-box;
+    
+    background-color: rgb(245, 245, 245);
+    
+    box-shadow: 2px .8rem 1rem rgba(0, 0, 0, .025);
+}
+
+.kanbans-header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
+    width: 200px;
+}
+
+#btn-create-kanban {
+    width: 200px;
+}
+
+.btn-class {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+}
+
 /*
 @media screen and (min-width: 900px) {
     .kanbans {
