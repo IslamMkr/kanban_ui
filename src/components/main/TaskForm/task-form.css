@@ -1,0 +1,51 @@
+.task-form {
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    
+    gap: 20px;
+    
+    background-color: white;
+    
+    box-sizing: border-box;
+    
+    box-shadow: 2px .8rem 1rem rgba(0, 0, 0, .025);
+    
+    padding: 20px;
+
+    border-radius: 4px;
+
+    margin-bottom: 10px;
+}
+
+.task-form-header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-form-field {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    box-sizing: border-box;
+    gap: 5px;
+}
+
+.date-picker {
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+}
+
+.date-picker #form-control {
+    padding: 7px 0;
+    width: 95%;
+}

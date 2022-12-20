@@ -7,6 +7,9 @@ import KanbanService from "../../services/KanbanService"
 import ListService from "../../services/ListService"
 
 import ViewKanbanIcon from '@mui/icons-material/ViewKanban';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import SettingsIcon from '@mui/icons-material/Settings';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import './kanban.css'
 
@@ -46,8 +49,6 @@ const Kanban = () => {
         ListService.getKanbanLists(kid)
             .then(res => {
                 setLists(res.data)
-                console.log("lists : ", res.data)
-                //console.log(res.data)
             })
             .catch(err => {
                 console.log("Kanban -> fetchKanbanLists -> failure : ", err)
@@ -57,21 +58,29 @@ const Kanban = () => {
     return (
         <div className='container'>
             <div className="kanban-header">
-                <div className="kanban-title">
-                    <ViewKanbanIcon className='icon'/>
-                    <h2>{kanban.title}</h2>
+                <div className="kanban-infos">
+                    <div className="kanban-title">
+                        <ViewKanbanIcon className='icon'/>
+                        <h2>{kanban.title}</h2>
+                    </div>
+                    <p id='description'>{kanban.description}</p>
+                    {
+                        kanban.owner !== undefined &&
+                        <p id='creator'>Créé par <b>{kanban.owner.firstname} {kanban.owner.lastname}</b></p>
+                    }
                 </div>
-                <p id='description'>{kanban.description}</p>
-                {
-                    kanban.owner !== undefined &&
-                    <p id='creator'>Créé par <b>{kanban.owner.firstname} {kanban.owner.lastname}</b></p>
-                }
+
+                <div className="kanban-settings">
+                    <PersonAddIcon  className='icon'/>
+                    <SettingsIcon className='icon' />
+                    <DeleteIcon className='icon icon-clear' />
+                </div>
             </div>
 
             <div className='lists'>
                 {
                     lists.map(list => (
-                        <List key={list.lid} list={list} />
+                        <List key={list.lid} kanban={kanban} list={list} />
                     ))
                 }
             </div>
