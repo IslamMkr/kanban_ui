@@ -127,7 +127,7 @@ const Task = ({ task, lists, notifyDataChanged, notifyTaskListChanged }) => {
                     <PersonIcon className='icon icon-person' />
                     <div className="task-affectation-text">
                         <p>Affecté à :</p>
-                        <h4>{task.user === null ? 'Non affecté' : `{task.user.firstname} {task.user.lastname}`}</h4>
+                        <h4>{task.user === null ? 'Non affecté' : task.user.firstname + " " + task.user.lastname}</h4>
                     </div>
                 </div>
 

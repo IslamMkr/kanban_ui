@@ -9,7 +9,7 @@ import "./list.css"
 import Task from '../Task/Task';
 import PopupMenu  from '../../reusable/PopupMenu/PopupMenu';
 
-const List = ({ kanban, list, tasks, lists, notifyDataChanged, notifyTaskListChanged }) => {
+const List = ({ kanban, list, members, tasks, lists, notifyDataChanged, notifyTaskListChanged }) => {
 
     const [showTaskForm, setShowTaskForm] = useState(false)
     const [toggleMenuItem, setToggleMenuItem] = useState(false)
@@ -54,7 +54,7 @@ const List = ({ kanban, list, tasks, lists, notifyDataChanged, notifyTaskListCha
 
             {
                 showTaskForm &&
-                <TaskForm kid={kanban.kid} lid={list.lid} onClose={() => setShowTaskForm(false)} notifyDataChanged={() => notifyDataChanged()} />
+                <TaskForm kid={kanban.kid} kanbanMembers={members} lid={list.lid} onClose={() => setShowTaskForm(false)} notifyDataChanged={() => notifyDataChanged()} />
             }
 
             <div className="list-content">

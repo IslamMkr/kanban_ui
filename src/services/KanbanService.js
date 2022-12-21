@@ -29,8 +29,8 @@ class KanbanService {
         return this.axiosInstance.get("public", { headers: authHeader() })
     }
 
-    addMemberToKanban = (kid, uid) => {
-        return this.axiosInstance.post(kid + "/addmember/" + uid, { headers: authHeader() })
+    addMemberToKanban = (kid, username) => {
+        return this.axiosInstance.put(kid + "/addmember/" + username, { headers: authHeader() })
     }
 
     getKanbanMembers = (kid) => {

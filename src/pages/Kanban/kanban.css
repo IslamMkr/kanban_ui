@@ -80,3 +80,16 @@
     
     box-shadow: 2px .8rem 1rem rgba(0, 0, 0, .025);
 }
+
+.kanban-header .menu {
+    width: 30%;
+    min-width: 100px;
+}
+
+.kanban-header .kanban-form-field {
+    margin-top: 10px;
+}
+
+.kanban-header .menu #btn {
+    margin-top: 5px;
+}

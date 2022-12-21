@@ -30,7 +30,6 @@ const Home = () => {
         const authData = AuthService.authData()
 
         if (authData === null) {
-            //console.log(authData)
             navigate("/", { replace: true })
         } else {
             fetchUser(authData.username)
@@ -132,24 +131,26 @@ const Home = () => {
                 </div>
 
                 {
-                    showKanbanForm &&
+                    showKanbanForm ?
                     <KanbanForm 
                         notifyDataChanged={() => fetchUserKanbans(user.uid)}
                         onClose={() => setShowKanbanForm(false)} />
+                    :
+                    <div className='btn-class'>
+                        <Button 
+                            id="btn-create-kanban"
+                            variant='outlined' 
+                            color="primary" 
+                            disableElevation
+                            onClick={() => {
+                                setShowKanbanForm(true)
+                            }}>
+                            Créer un kanban
+                        </Button>
+                    </div>
                 }
 
-                <div className='btn-class'>
-                    <Button 
-                        id="btn-create-kanban"
-                        variant='outlined' 
-                        color="primary" 
-                        disableElevation
-                        onClick={() => {
-                            setShowKanbanForm(true)
-                        }}>
-                        Créer un kanban
-                    </Button>
-                </div>
+                
 
             </div>
         </div>

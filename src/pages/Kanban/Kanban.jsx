@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { useParams, useLocation } from 'react-router-dom'
+import { useParams, useLocation, useNavigate } from 'react-router-dom'
 
 import List from '../../components/main/List/List'
 import KanbanService from "../../services/KanbanService"
@@ -12,8 +12,11 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 import './kanban.css'
 import PopupMenu from '../../components/reusable/PopupMenu/PopupMenu'
+import { Button, TextField } from '@mui/material'
 
 const Kanban = () => {
+    const navigate = useNavigate()
+
     const { kid } = useParams()
     const location = useLocation()
 
@@ -21,7 +24,12 @@ const Kanban = () => {
     const [lists, setLists] = useState([])
     const [tasks, setTasks] = useState([])
 
+    const [members, setMembers] = useState([])
+
+    const [username, setUsername] = useState("")
+
     const [togglePopupMenu, setTogglePopupMenu] = useState(false)
+    const [toggleInviteUser, setToggleInviteUser] = useState(false)
 
     useEffect(() => {
         if (location.state.kanban === null &&
@@ -68,8 +76,50 @@ const Kanban = () => {
             })
     }
 
-    const onMenuItemClicked = () => {
+    const onMenuItemClicked = (item) => {
         setTogglePopupMenu(!togglePopupMenu)
+
+        if (item === "Supprimer") {
+            deleteKanban()
+        } else if (item === "Inviter") {
+            setToggleInviteUser(!toggleInviteUser)
+        }
+    }
+
+    const deleteKanban = () => {
+        KanbanService.deleteKanban(kid)
+            .then(res => {
+                if (res.data.type === "success") {
+                    navigate("/home")
+                } else {
+                    console.error("Kanban -> onMenuItelmClicked -> Could not delete kanban", )
+                }
+            })
+            .catch(err => {
+                console.error("Kanban -> onMenuItelmClicked -> failure : ", err)
+            })
+    }
+
+    const inviteUser = () => {
+        setToggleInviteUser(!toggleInviteUser)
+
+        KanbanService.addMemberToKanban(kid, username)
+            .then(res => {
+                fetchMembers()
+            })
+            .catch(err => {
+                console.log("Kanban -> inviteUser -> failure : ", err)
+            })
+    }
+
+    const fetchMembers = () => {
+        KanbanService.getKanbanMembers(kid)
+            .then(res => {
+                setMembers(res.data)
+            })
+            .catch(err => {
+                console.log("Kanban -> fetchMembers -> failure : ", err)
+            })
     }
 
     const taskChangedList = () => {
@@ -100,13 +150,38 @@ const Kanban = () => {
                         togglePopupMenu &&
                         <PopupMenu menuItems={[{option: "Inviter"}, {option: "Supprimer"}]} onItemClicked={(item) => onMenuItemClicked(item)} />
                     }
+                    
+                    {
+                        toggleInviteUser &&
+
+                        <div className="kanban-form-field">
+                            <TextField 
+                                className='textfield' 
+                                label="Nom d'utilisateur" 
+                                variant='outlined'
+                                type="text"
+                                onChange={(e) => setUsername(e.target.value)} />
+                            
+
+                            <Button 
+                                    id='btn'
+                                    variant='outlined' 
+                                    color="primary" 
+                                    disableElevation
+                                    onClick={inviteUser}>
+                                Inviter
+                            </Button>
+                        </div>
+                    }
                 </div>
+
+                
             </div>
 
             <div className='lists'>
                 {
                     lists.map(list => (
-                        <List key={list.lid} kanban={kanban} list={list} tasks={tasks.filter(task => task.list.lid === list.lid)} lists={lists} notifyTaskListChanged={(task) => taskChangedList(task)} notifyDataChanged={() => fetchTasks()} />
+                        <List key={list.lid} kanban={kanban} members={members} list={list} tasks={tasks.filter(task => task.list.lid === list.lid)} lists={lists} notifyTaskListChanged={(task) => taskChangedList(task)} notifyDataChanged={() => fetchTasks()} />
                     ))
                 }
             </div>

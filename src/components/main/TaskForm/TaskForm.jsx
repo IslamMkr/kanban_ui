@@ -140,7 +140,7 @@ const TaskForm = ({ kid, lid, kanbanMembers, onClose, notifyDataChanged }) => {
                             {
                                 kanbanMembers !== undefined &&
                                 kanbanMembers.map(member => (
-                                    <MenuItem value={member.uid}>{member.firstname} {member.lastname}</MenuItem>
+                                    <MenuItem key={member.uid} value={member.uid}>{member.firstname} {member.lastname}</MenuItem>
                                 ))
                             }
                         </Select>
