@@ -5,29 +5,24 @@ import AddIcon from '@mui/icons-material/Add';
 
 import TaskForm from '../TaskForm/TaskForm';
 
-import TaskService from '../../../services/TaskService';
-
 import "./list.css"
 import Task from '../Task/Task';
+import PopupMenu  from '../../reusable/PopupMenu/PopupMenu';
 
-const List = ({ kanban, list }) => {
-    const [tasks, setTasks] = useState([])
+const List = ({ kanban, list, tasks, lists, notifyDataChanged, notifyTaskListChanged }) => {
 
     const [showTaskForm, setShowTaskForm] = useState(false)
+    const [toggleMenuItem, setToggleMenuItem] = useState(false)
 
     useEffect(() => {
-        fetchTasks()
     }, [])
 
-    const fetchTasks = () => {
-        TaskService.getListTasks(list.lid)
-            .then(res => {
-                console.log(res.data)
-                setTasks(res.data)
-            })
-            .catch(err => {
-                console.log("List -> fetchTasks -> failure : ", err)
-            })
+    const onMenuItemClicked = (item) => {
+        setToggleMenuItem(!toggleMenuItem)
+    }
+
+    const taskChangedList = () => {
+        notifyTaskListChanged()
     }
 
     return (
@@ -35,7 +30,21 @@ const List = ({ kanban, list }) => {
             
             <div className="list-header">
                 <p>{list.title}</p>
-                <MoreVertIcon className='icon-options' />
+                
+                <div className="menu">
+                    <MoreVertIcon className='icon-options'
+                        onClick={() => { 
+                            setToggleMenuItem(!toggleMenuItem)
+                            console.log(toggleMenuItem)
+                            }} />
+                    
+                    {
+                        toggleMenuItem &&
+                        <div>
+                            <PopupMenu menuItems={[{option: "Supprimer"}]} onItemClicked={(item) => onMenuItemClicked(item)} />
+                        </div>
+                    }
+                </div>
             </div>
 
             <div className="add-task"
@@ -45,7 +54,7 @@ const List = ({ kanban, list }) => {
 
             {
                 showTaskForm &&
-                <TaskForm kid={kanban.kid} lid={list.lid} onClose={() => setShowTaskForm(false)} notifyDataChanged={fetchTasks} />
+                <TaskForm kid={kanban.kid} lid={list.lid} onClose={() => setShowTaskForm(false)} notifyDataChanged={() => notifyDataChanged()} />
             }
 
             <div className="list-content">
@@ -53,7 +62,7 @@ const List = ({ kanban, list }) => {
                 <div className='list-tasks'>
                     {
                         tasks.map(task => (
-                            <Task key={task.tid} task={task}/>
+                            <Task key={task.tid} task={task} lists={lists} notifyDataChanged={() => notifyDataChanged()} notifyTaskListChanged={(task) => taskChangedList(task)} />
                         ))
                     }
                 </div>

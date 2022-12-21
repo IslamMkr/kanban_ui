@@ -42,6 +42,7 @@ const formats = ['bold', 'italic', 'underline', 'strike'];
 const TaskForm = ({ kid, lid, kanbanMembers, onClose, notifyDataChanged }) => {
     const { quill, quillRef } = useQuill({ theme, modules, formats, placeholder })
 
+    const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [taskManager, setTaskManager] = useState("non-affected")
     const [choseLimitDate, setChoseLimitDate] = useState(false)
@@ -58,6 +59,7 @@ const TaskForm = ({ kid, lid, kanbanMembers, onClose, notifyDataChanged }) => {
 
     const createNewTask = () => {
         const task = {
+            title: title,
             description: description,
             time_limit: choseLimitDate ? date : null,
             kanban: {
@@ -85,6 +87,7 @@ const TaskForm = ({ kid, lid, kanbanMembers, onClose, notifyDataChanged }) => {
 
     const resetFields = () => {
         quill.setText("")
+        setTitle("")
         setTaskManager("non-affected")
         setChoseLimitDate(false)
     }
@@ -107,6 +110,15 @@ const TaskForm = ({ kid, lid, kanbanMembers, onClose, notifyDataChanged }) => {
                 <p>Nouvelle tâche</p>
                 <ClearIcon className='icon icon-clear'
                     onClick={() => onClose()} />
+            </div>
+
+            <div className='task-form-field'>
+                <TextField 
+                    className='textfield' 
+                    label="Titre" 
+                    variant='outlined'
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)} />
             </div>
 
             <div className='task-form-field'>

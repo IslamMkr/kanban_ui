@@ -5,7 +5,9 @@ import authHeader from "./AuthHeader";
 class TaskService {
 
     axiosInstance = axios.create({
-        headers: {"Access-Control-Allow-Origin": "*"},
+        headers: {
+            "Access-Control-Allow-Origin": "*"
+        },
         baseURL: process.env.REACT_APP_URL_API_V1_TASKS
     });
     
@@ -22,13 +24,13 @@ class TaskService {
     }
 
     getKanbanTasks = (kid) => {
-        this.axiosInstance.get("kanban/" + kid, authHeader)
+        return this.axiosInstance.get("kanban/" + kid, authHeader)
     }
 
     updateTaskList = (tid, lid) => {
-        this.axiosInstance.put(tid + "/list/" + lid, authHeader)
+        return this.axiosInstance.put(tid + "/list/" + lid, authHeader)
     }
-
+    
     deleteTask = (tid) => {
         return this.axiosInstance.delete("delete/" + tid, authHeader)
     }
