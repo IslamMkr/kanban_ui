@@ -8,44 +8,40 @@ class AuthService {
         baseURL: 'http://localhost:8080/'
     });
 
-    login = (username, password) => {
+    login = async (username, password) => {
         // Requires x-www-form-urlencoded data form
         const params = new URLSearchParams()
         params.append('username', username)
         params.append('password', password)
 
-        return this.axiosInstance.post("/login", params, { headers: authHeader() })
+        return await this.axiosInstance.post("/login", params)
             .then (res => {
                 if (res.data.accessToken) {
                     localStorage.setItem("auth-data", JSON.stringify(res.data))
                 }
 
-                console.log("auth service ok : ", res.data)
-
                 return res.data
             }).catch (err => {
-                console.log("auth service bad : ", err)
-                console.log(err)
+                console.log("AuthService -> login -> failure : ", err)
             }) 
     }
 
     logout = () => {
         localStorage.removeItem('auth-data')
+        localStorage.removeItem('user')
     }
 
-    signin = (user) => {
-        return this.axiosInstance.post("api/v1/users/save", user, { headers: authHeader() })
-        .then (res => {
-            return res
-        })
-        .catch (err => {
-            console.log(err)
-            return err
-        }) 
+    signin = async (user) => {
+        return await this.axiosInstance.post("api/v1/users/save", user, { headers: authHeader() })
+            .then (res => {
+                return res
+            })
+            .catch (err => {
+                console.log("AuthService -> signin -> failure : ", err)
+            }) 
     }
     
     authData = () => {
-        //console.log(JSON.parse(localStorage.getItem('auth-data')))
         return JSON.parse(localStorage.getItem('auth-data')) 
     }
 }

@@ -9,20 +9,20 @@ class ListService {
         baseURL: process.env.REACT_APP_URL_API_V1_LISTS
     });
 
-    getListById = (lid) => {
-        return this.axiosInstance.get(lid, authHeader)
+    getListById = async (lid) => {
+        return await this.axiosInstance.get(lid, authHeader)
     }
 
-    getKanbanLists = (kid) => {
-        return this.axiosInstance.get("kanban/" + kid, authHeader)
+    getKanbanLists = async (kid) => {
+        return await this.axiosInstance.get("kanban/" + kid, authHeader)
     }
 
-    saveList = (list) => {
-        return this.axiosInstance.post("save", list, authHeader)
+    saveList = async (list) => {
+        return await this.axiosInstance.post("save", list, authHeader)
     }
 
-    deleteList = (lid) => {
-        return this.axiosInstance.delete("delete/" + lid, authHeader)
+    deleteList = async (lid) => {
+        return await this.axiosInstance.delete("delete/" + lid, authHeader)
     }
 
 }

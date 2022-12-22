@@ -8,16 +8,18 @@ import TaskForm from '../TaskForm/TaskForm';
 import "./list.css"
 import Task from '../Task/Task';
 import PopupMenu  from '../../reusable/PopupMenu/PopupMenu';
+import { Dialog } from '@mui/material';
 
-const List = ({ kanban, list, members, tasks, lists, notifyDataChanged, notifyTaskListChanged }) => {
+const List = ({ kanban, isOwner, isAuth, list, members, tasks, lists, notifyDataChanged, notifyTaskListChanged }) => {
 
     const [showTaskForm, setShowTaskForm] = useState(false)
     const [toggleMenuItem, setToggleMenuItem] = useState(false)
 
     useEffect(() => {
+        console.log(kanban)
     }, [])
 
-    const onMenuItemClicked = (item) => {
+    const onMenuItemClicked = () => {
         setToggleMenuItem(!toggleMenuItem)
     }
 
@@ -31,30 +33,38 @@ const List = ({ kanban, list, members, tasks, lists, notifyDataChanged, notifyTa
             <div className="list-header">
                 <p>{list.title}</p>
                 
-                <div className="menu">
-                    <MoreVertIcon className='icon-options'
-                        onClick={() => { 
-                            setToggleMenuItem(!toggleMenuItem)
-                            console.log(toggleMenuItem)
-                            }} />
-                    
-                    {
-                        toggleMenuItem &&
-                        <div>
-                            <PopupMenu menuItems={[{option: "Supprimer"}]} onItemClicked={(item) => onMenuItemClicked(item)} />
-                        </div>
-                    }
-                </div>
-            </div>
-
-            <div className="add-task"
-                onClick={() => setShowTaskForm(true)}>
-                <AddIcon className=' icon-add' />
+                {
+                    isAuth && isOwner &&
+                    <div className="menu">
+                        <MoreVertIcon className='icon-options'
+                            onClick={() => { setToggleMenuItem(!toggleMenuItem) }} />
+                        
+                        {
+                            toggleMenuItem &&
+                            <div>
+                                <PopupMenu menuItems={[{option: "Supprimer"}]} onItemClicked={(item) => onMenuItemClicked(item)} />
+                            </div>
+                        }
+                    </div>
+                }
             </div>
 
             {
+                isAuth && isOwner &&
+                <div className="add-task"
+                    onClick={() => setShowTaskForm(true)}>
+                    <AddIcon className=' icon-add' />
+                </div>
+            }
+
+            {
                 showTaskForm &&
-                <TaskForm kid={kanban.kid} kanbanMembers={members} lid={list.lid} onClose={() => setShowTaskForm(false)} notifyDataChanged={() => notifyDataChanged()} />
+                <Dialog
+                    open={showTaskForm}
+                    fullWidth={true}>
+
+                        <TaskForm kid={kanban.kid} kanbanMembers={members} lid={list.lid} onClose={() => setShowTaskForm(false)} notifyDataChanged={() => notifyDataChanged()} />
+                </Dialog>
             }
 
             <div className="list-content">
@@ -62,7 +72,7 @@ const List = ({ kanban, list, members, tasks, lists, notifyDataChanged, notifyTa
                 <div className='list-tasks'>
                     {
                         tasks.map(task => (
-                            <Task key={task.tid} task={task} lists={lists} notifyDataChanged={() => notifyDataChanged()} notifyTaskListChanged={(task) => taskChangedList(task)} />
+                            <Task key={task.tid} isOwner={isOwner} isAuth={isAuth} task={task} lists={lists} notifyDataChanged={() => notifyDataChanged()} notifyTaskListChanged={(task) => taskChangedList(task)} />
                         ))
                     }
                 </div>

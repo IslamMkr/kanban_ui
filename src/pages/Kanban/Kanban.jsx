@@ -9,10 +9,11 @@ import TaskService from '../../services/TaskService';
 
 import ViewKanbanIcon from '@mui/icons-material/ViewKanban';
 import SettingsIcon from '@mui/icons-material/Settings';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import './kanban.css'
 import PopupMenu from '../../components/reusable/PopupMenu/PopupMenu'
-import { Button, TextField } from '@mui/material'
+import { Button, Dialog, TextField } from '@mui/material'
 
 const Kanban = () => {
     const navigate = useNavigate()
@@ -56,7 +57,6 @@ const Kanban = () => {
     }
 
     const fetchTasks = () => {
-        console.log(kid)
         TaskService.getKanbanTasks(kid)
             .then(res => {
                 setTasks(res.data)
@@ -126,10 +126,24 @@ const Kanban = () => {
         fetchTasks()
     }
 
+    const returnToHomePage = () => {
+        if (location.state.isAuth) {
+            navigate("/home")
+        } else {
+            navigate("/")
+        }
+    }
+
     return (
         <div className='container'>
             <div className="kanban-header">
                 <div className="kanban-infos">
+                    <div 
+                        className="kanban-return"
+                        onClick={returnToHomePage}>
+                        <ArrowBackIcon className='icon-back' />
+                        <h5>Accueil</h5>
+                    </div>
                     <div className="kanban-title">
                         <ViewKanbanIcon className='icon'/>
                         <h2>{kanban.title}</h2>
@@ -141,47 +155,64 @@ const Kanban = () => {
                     }
                 </div>
                 
-                <div className="menu">
-                    <SettingsIcon 
-                        className='icon'
-                        onClick={() => setTogglePopupMenu(!togglePopupMenu)} />
-                    
-                    {
-                        togglePopupMenu &&
-                        <PopupMenu menuItems={[{option: "Inviter"}, {option: "Supprimer"}]} onItemClicked={(item) => onMenuItemClicked(item)} />
-                    }
-                    
-                    {
-                        toggleInviteUser &&
+                {
+                    location.state.isAuth && location.state.isOwner &&
+                    <div className="menu">
+                        <SettingsIcon 
+                            className='icon'
+                            onClick={() => setTogglePopupMenu(!togglePopupMenu)} />
+                        
+                        {
+                            togglePopupMenu &&
+                            <PopupMenu menuItems={[{option: "Inviter"}, {option: "Supprimer"}]} onItemClicked={(item) => onMenuItemClicked(item)} />
+                        }
+                        
+                        {
+                            toggleInviteUser &&
 
-                        <div className="kanban-form-field">
-                            <TextField 
-                                className='textfield' 
-                                label="Nom d'utilisateur" 
-                                variant='outlined'
-                                type="text"
-                                onChange={(e) => setUsername(e.target.value)} />
-                            
+                            <Dialog
+                                open={toggleInviteUser}
+                                fullWidth={true}>
+                                <div className="kanban-invite-user">
+                                    <h3>Inviter un utilisateur </h3>
+                                    <TextField 
+                                        className='textfield' 
+                                        label="Nom d'utilisateur" 
+                                        variant='outlined'
+                                        type="text"
+                                        onChange={(e) => setUsername(e.target.value)} />
+                                    
 
-                            <Button 
-                                    id='btn'
-                                    variant='outlined' 
-                                    color="primary" 
-                                    disableElevation
-                                    onClick={inviteUser}>
-                                Inviter
-                            </Button>
-                        </div>
-                    }
-                </div>
-
+                                    <div className="btns">
+                                        <Button 
+                                            id='btn'
+                                            variant='outlined' 
+                                            color="primary" 
+                                            disableElevation
+                                            onClick={inviteUser}>
+                                            Inviter
+                                        </Button>
+                                        <Button 
+                                                id='btn'
+                                                variant='outlined' 
+                                                color="secondary" 
+                                                disableElevation
+                                                onClick={() => setToggleInviteUser(false)}>
+                                            Annuler
+                                        </Button>
+                                    </div>
+                                </div>
+                            </Dialog>
+                        }
+                    </div>
+                }
                 
             </div>
 
             <div className='lists'>
                 {
                     lists.map(list => (
-                        <List key={list.lid} kanban={kanban} members={members} list={list} tasks={tasks.filter(task => task.list.lid === list.lid)} lists={lists} notifyTaskListChanged={(task) => taskChangedList(task)} notifyDataChanged={() => fetchTasks()} />
+                        <List key={list.lid} isOwner={location.state.isOwner} isAuth={location.state.isAuth} kanban={kanban} members={members} list={list} tasks={tasks.filter(task => task.list.lid === list.lid)} lists={lists} notifyTaskListChanged={(task) => taskChangedList(task)} notifyDataChanged={() => fetchTasks()} />
                     ))
                 }
             </div>

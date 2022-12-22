@@ -13,8 +13,18 @@ const Login = ({ login }) => {
     const [error, setError] = useState(false)
     
     const connectionHandler = () => {
-        console.log(username, password)
+        setError(false)
+
+        const goodUsername = username.trim() !== "" && !username.includes(' ')
+        const goodPassword = password.trim() !== "" && password.length > 4
         
+        if (!goodUsername || !goodPassword) {
+            setError(true)
+
+            return
+        }
+
+        if (username)
         AuthService.login(username, password)
             .then(res => {
                 if (res === undefined) {
@@ -26,7 +36,7 @@ const Login = ({ login }) => {
             })
             .catch(err => {
                 setError(true)
-                console.log(err)
+                console.log("Login -> connectionHandler -> failure : ", err)
             })
     }
 
@@ -56,7 +66,7 @@ const Login = ({ login }) => {
             }
 
             <Button 
-                    id='btn'
+                    id='btn-create-account'
                     variant='outlined' 
                     color="primary" 
                     disableElevation

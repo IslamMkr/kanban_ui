@@ -97,3 +97,8 @@
 
     margin: 20px 0;
 }
+
+hr {
+    width: 100%;
+    border: 1px solid #caecff;
+}

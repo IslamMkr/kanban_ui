@@ -72,7 +72,6 @@ const KanbanForm = ({ notifyDataChanged, onClose }) => {
         }
 
         setError(false)
-        console.log(user)
 
         const kanban = {
             title: title,
@@ -86,8 +85,6 @@ const KanbanForm = ({ notifyDataChanged, onClose }) => {
             },
             members: []
         }
-
-        console.log(kanban)
         
         KanbanService.saveKanban(kanban)
             .then(res => {

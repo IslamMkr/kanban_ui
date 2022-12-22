@@ -1,14 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Paper from '@mui/material/Paper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import { ListItemText } from '@mui/material';
 
 const PopupMenu = ({ menuItems, onItemClicked }) => {
-
-    useEffect(() => {
-        console.log(menuItems)
-    }, [])
 
     return (
         <Paper dsx={{ width: 320, maxWidth: '100%' }}>

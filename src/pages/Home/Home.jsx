@@ -12,7 +12,9 @@ import KanbanForm from '../../components/main/KanbanForm/KanbanForm'
 import Project from "../../components/main/Project/Project"
 import KanbanService from '../../services/KanbanService'
 
-import { Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import { Button, Dialog, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import TaskService from '../../services/TaskService'
+import UserTask from '../../components/main/UserTask/UserTask'
 
 const Home = () => {
     const navigate = useNavigate()
@@ -21,8 +23,12 @@ const Home = () => {
 
     const [kanbans, setKanbans] = useState([])
     const [filteredKanbans, setFilteredKanbans] = useState([])
+    const [kanbanFilterValue, setKanbanFilterValue] = useState("tout")
+
     
-    const [filterValue, setFilterValue] = useState("tout")
+    const [tasks, setTasks] = useState([])
+    const [filteredTasks, setFilteredTasks] = useState([])
+    const [taskFilterValue, setTaskFilterValue] = useState("tout")
 
     const [showKanbanForm, setShowKanbanForm] = useState(false)
 
@@ -46,6 +52,7 @@ const Home = () => {
                     navigate("/")
                 } else {
                     fetchUserKanbans(res.data.uid)
+                    fetchUserTasks(res.data.uid)
                 }
             })
             .catch(err => {
@@ -61,7 +68,19 @@ const Home = () => {
                 setFilteredKanbans(res.data)
             })
             .catch(err => {
-                console.log("Home -> fetchUserKanbans -> failure 1 : ", err)
+                console.log("Home -> fetchUserKanbans -> failure : ", err)
+            })
+    }
+
+    const fetchUserTasks = (uid) => {
+        TaskService.getUserTasks(uid)
+            .then(res => {
+                setTasks(res.data)
+                setFilteredTasks(res.data)
+                console.log("ressss : ", res.data)
+            })
+            .catch(err => {
+                console.log("Home -> fetchUserTasks -> failure : ", err)
             })
     }
 
@@ -77,11 +96,22 @@ const Home = () => {
         }
     }
 
-    const goToKanbanPage = (kanban) => {
+    const filterTasks = (filter) => {
+        if (filter === 'tout') {
+            setFilteredTasks(tasks)
+        } else {
+            const kanbanTasks = tasks.filter(task => task.kanban.kid === filter)
+            setFilteredTasks(kanbanTasks)
+        }
+    }
+
+    const goToKanbanPage = (kanban, isAuth) => {
         navigate("/home/kanban/" + kanban.kid, { 
             replace: true,
             state: {
-                kanban: kanban
+                kanban: kanban,
+                isOwner: kanban.owner.username === user.username,
+                isAuth: true
             }
         })
     }
@@ -107,9 +137,9 @@ const Home = () => {
                                 labelId="demo-simple-select-label"
                                 id="filters-select"
                                 label="filters"
-                                value={filterValue}
+                                value={kanbanFilterValue}
                                 onChange={(e) => {
-                                    setFilterValue(e.target.value)
+                                    setKanbanFilterValue(e.target.value)
                                     filterKanbans(e.target.value)
                                 }}>
 
@@ -125,16 +155,20 @@ const Home = () => {
                     {
                         
                         filteredKanbans.map(kanban => (
-                            <Project key={kanban.kid} kanban={kanban} seeMore={(kanban) => goToKanbanPage(kanban)} />
+                            <Project key={kanban.kid} kanban={kanban} seeMore={(kanban, isAuth) => goToKanbanPage(kanban, isAuth)} />
                         ))
                     }
                 </div>
 
                 {
                     showKanbanForm ?
-                    <KanbanForm 
-                        notifyDataChanged={() => fetchUserKanbans(user.uid)}
-                        onClose={() => setShowKanbanForm(false)} />
+                    <Dialog 
+                        open={showKanbanForm}
+                        fullWidth={true}>
+                        <KanbanForm 
+                            notifyDataChanged={() => fetchUserKanbans(user.uid)}
+                            onClose={() => setShowKanbanForm(false)} />
+                    </Dialog>
                     :
                     <div className='btn-class'>
                         <Button 
@@ -150,7 +184,46 @@ const Home = () => {
                     </div>
                 }
 
-                
+            </div>
+
+            <hr />
+
+            <div className='home-kanbans'>
+                <div className="kanbans-header">
+                    <h3>Vos taches</h3>
+
+                    <div className="filters">
+                        <FormControl id="filters-select">
+                            <InputLabel id="filters-select-label">Filtres</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="filters-select"
+                                label="filters"
+                                value={taskFilterValue}
+                                onChange={(e) => {
+                                    setTaskFilterValue(e.target.value)
+                                    filterTasks(e.target.value)
+                                }}>
+
+                                <MenuItem value="tout">Tout</MenuItem>
+                                
+                                {
+                                    kanbans.map(kanban => (
+                                        <MenuItem key={kanban.kid} value={kanban.kid}>{kanban.title}</MenuItem>
+                                    ))
+                                }
+                            </Select>
+                        </FormControl>
+                    </div>
+                </div>
+
+                <div className="kanbans">
+                    {
+                        filteredTasks.map(task => (
+                            <UserTask key={task.tid} task={task} />
+                        ))
+                    }
+                </div>
 
             </div>
         </div>

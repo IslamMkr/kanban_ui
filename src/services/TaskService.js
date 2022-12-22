@@ -11,28 +11,32 @@ class TaskService {
         baseURL: process.env.REACT_APP_URL_API_V1_TASKS
     });
     
-    saveTask = (task) => {
-        return this.axiosInstance.post("save", task, authHeader)
+    saveTask = async (task) => {
+        return await this.axiosInstance.post("save", task, authHeader)
     }
 
-    getTaskById = (tid) => {
-        return this.axiosInstance.get(tid, authHeader)
+    getTaskById = async (tid) => {
+        return await this.axiosInstance.get(tid, authHeader)
     }
 
-    getListTasks = (lid) => {
-        return this.axiosInstance.get("list/" + lid, authHeader)
+    getListTasks = async (lid) => {
+        return await this.axiosInstance.get("list/" + lid, authHeader)
     }
 
-    getKanbanTasks = (kid) => {
-        return this.axiosInstance.get("kanban/" + kid, authHeader)
+    getKanbanTasks = async (kid) => {
+        return await this.axiosInstance.get("kanban/" + kid, authHeader)
     }
 
-    updateTaskList = (tid, lid) => {
-        return this.axiosInstance.put(tid + "/list/" + lid, authHeader)
+    updateTaskList = async (tid, lid) => {
+        return await this.axiosInstance.put(tid + "/list/" + lid, authHeader)
     }
     
-    deleteTask = (tid) => {
-        return this.axiosInstance.delete("delete/" + tid, authHeader)
+    deleteTask = async (tid) => {
+        return await this.axiosInstance.delete("delete/" + tid, authHeader)
+    }
+
+    getUserTasks = async (uid) => {
+        return await this.axiosInstance.get("user/" + uid, authHeader)
     }
 
 }

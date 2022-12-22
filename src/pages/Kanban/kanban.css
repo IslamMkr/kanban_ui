@@ -66,19 +66,22 @@
 
 .lists {
     width: 100%;
+    min-height: 65vh;
     display: flex;
     flex-direction: row;
     justify-content: left;
-    align-items: center;
+    align-items: flex-start;
     
     gap: 20px;
-    padding: 20px 19%;
+    padding: 20px 10%;
     
     box-sizing: border-box;
     
     background-color: rgb(245, 245, 245);
     
     box-shadow: 2px .8rem 1rem rgba(0, 0, 0, .025);
+
+    overflow: auto;
 }
 
 .kanban-header .menu {
@@ -92,4 +95,50 @@
 
 .kanban-header .menu #btn {
     margin-top: 5px;
+}
+
+.kanban-return {
+    width: 100px;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    gap: 10px;
+
+    border-radius: 4px;
+    cursor: pointer;
+    
+    margin-bottom: 10px;
+
+    border: 1px solid #fff;
+}
+
+.kanban-return h5 {
+    margin: 0;
+    padding: 0;
+}
+
+.kanban-return:hover {
+    border: 1px solid #026AA7;
+}
+
+.kanban-invite-user {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    gap: 20px;
+
+    padding: 20px;
+}
+
+.kanban-invite-user .btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    gap: 100px;
+
+    padding: 0px 100px;
 }

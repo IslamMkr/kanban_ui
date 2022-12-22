@@ -55,9 +55,20 @@ const TaskForm = ({ kid, lid, kanbanMembers, onClose, notifyDataChanged }) => {
                 setDescription(quill.root.innerHTML)
             })
         }
+
+        console.log(kanbanMembers)
     }, [quill, description])
 
     const createNewTask = () => {
+        const currentUser = JSON.parse(localStorage.getItem("user"))
+
+        const goodTitle = title.trim() !== ""
+        const goodDescription = description.trim() !== ""
+
+        if (!goodTitle || !goodDescription) {
+            return
+        }
+
         const task = {
             title: title,
             description: description,
@@ -65,15 +76,13 @@ const TaskForm = ({ kid, lid, kanbanMembers, onClose, notifyDataChanged }) => {
             kanban: {
                 kid: kid
             }, 
-            user: taskManager === 'non-affected' ? null : {
-                uid: taskManager
+            user: {
+                uid: taskManager === 'non-affected' ? currentUser.uid : taskManager
             },
             list: {
                 lid: lid
             }
         }
-
-        console.log(task)
         
         TaskService.saveTask(task)
             .then(res => {
@@ -152,9 +161,7 @@ const TaskForm = ({ kid, lid, kanbanMembers, onClose, notifyDataChanged }) => {
                     control={
                         <Checkbox 
                             checked={choseLimitDate}
-                            onChange={() => { 
-                                console.log("limitdate : ", !choseLimitDate)
-                                setChoseLimitDate(!choseLimitDate)}} />
+                            onChange={() => { setChoseLimitDate(!choseLimitDate)} } />
                     } 
                     label="Date limite" />
 

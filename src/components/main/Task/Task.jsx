@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import PersonIcon from '@mui/icons-material/Person';
@@ -11,15 +11,35 @@ import "./task.css"
 import PopupMenu from '../../reusable/PopupMenu/PopupMenu';
 
 import TaskService from "../../../services/TaskService"
+import AuthService from "../../../services/AuthService"
+
 import { Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const parse = require("html-react-parser")
 
-const Task = ({ task, lists, notifyDataChanged, notifyTaskListChanged }) => {
+const Task = ({ task, isAuth, lists, notifyDataChanged, notifyTaskListChanged }) => {
 
     const [togglePopupMenu, setTogglePopupMenu] = useState(false)
     const [toggleMove, setToggleMove] = useState(false)
 
+    const [affectedToUser, setAffected] = useState(false)
+    const [isKanbanOwner, setKanbanOwner] = useState(false)
+
+    useEffect(() => {
+        if (AuthService.authData() !== null) {
+            const mine = AuthService.authData().username === task.user.username
+    
+            setAffected(mine)
+        } else {
+            setAffected(false)
+        }
+
+        if (localStorage.getItem("user") !== null) {
+            const user = JSON.parse(localStorage.getItem("user"))
+
+            setKanbanOwner(user.uid === task.kanban.owner.uid)
+        }
+    }, [])
 
     const [listValue, setListValue] = useState(task.list.lid)
 
@@ -73,19 +93,23 @@ const Task = ({ task, lists, notifyDataChanged, notifyTaskListChanged }) => {
                     <AssignmentIcon className='icon icon-task' />
                     <h3>{task.title}</h3>
                 </div>
-                <div className="menu">
-                    <MoreVertIcon 
-                    onClick={() => {
-                        if (!toggleMove && !togglePopupMenu) {
-                            setTogglePopupMenu(!togglePopupMenu)
-                        }
-                    }} />
+                {
+                    ((isAuth && affectedToUser) || isKanbanOwner) &&
 
-                    {
-                        togglePopupMenu &&
-                        <PopupMenu menuItems={[{option: "Déplacer"}, {option: "Supprimer"}]} onItemClicked={(item) => onMenuItemClicked(item)} />
-                    }
-                </div>
+                    <div className="menu">
+                        <MoreVertIcon 
+                        onClick={() => {
+                            if (!toggleMove && !togglePopupMenu) {
+                                setTogglePopupMenu(!togglePopupMenu)
+                            }
+                        }} />
+
+                        {
+                            togglePopupMenu &&
+                            <PopupMenu menuItems={[{option: "Déplacer"}, {option: "Supprimer"}]} onItemClicked={(item) => onMenuItemClicked(item)} />
+                        }
+                    </div>
+                }
             </div>
 
             {

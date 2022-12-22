@@ -7,6 +7,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 
+
 const Project = ({ kanban, seeMore }) => {
     return (
         <article className='card'>

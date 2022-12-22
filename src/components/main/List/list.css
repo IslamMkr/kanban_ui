@@ -1,6 +1,6 @@
 
-.list, .list-content {
-    width: 300px;
+.list {
+    min-width: 350px;
 
     display: flex;
     flex-direction: column;
@@ -11,6 +11,20 @@
 
     box-sizing: border-box;
     
+}
+
+.list-content {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 4px;
+
+    box-sizing: border-box;
+
 }
 
 .list-content {

@@ -29,6 +29,48 @@ const Signin = () => {
     }
 
     const accountCreationHandler = () => {
+        const goodFirstname = firstname.trim() !== ""
+        const goodLastname = lastname.trim() !== ""
+        const goodUsername = username.trim() !== "" && !username.includes(' ')
+        const goodPassword = password.trim() !== "" && password.length > 4
+        const goodEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+
+        if (!goodLastname) {
+            setError(true)
+            setErrorMsg("Nom incorrect!")
+
+            return
+        }
+
+        if (!goodFirstname) {
+            setError(true)
+            setErrorMsg("Prénom incorrect!")
+
+            return
+
+        }
+        
+        if (!goodUsername) {
+            setError(true)
+            setErrorMsg("Nom d'utilisateur incorrect, doit etre sans espaces!")
+
+            return
+        }
+
+        if (!goodEmail) {
+            setError(true)
+            setErrorMsg("Email incorrect!")
+
+            return
+        }
+
+        if (!goodPassword) {
+            setError(true)
+            setErrorMsg("Mot de passe doit avoir au moins 4 caractères!")
+
+            return
+        }
+
         const user = {
             firstname: firstname,
             lastname: lastname,
@@ -40,7 +82,7 @@ const Signin = () => {
         AuthService.signin(user)
             .then(res => {
                 if (res.data === "") {
-                    setErrorMsg("Vos informations ne sont pas correctes!")
+                    setErrorMsg("Votre email et/ou nom d'utilisateur sont déja utilisés!")
                     setError(true)
                 } else {
                     setErrorMsg("Votre compte est créé.")

@@ -3,7 +3,6 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import './App.css';
 import Header from './components/main/Header/Header';
-import Invited from './pages/Invited/Invited';
 import Welcome from './pages/Welcome/Welcome';
 import Home from './pages/Home/Home';
 import Kanban from './pages/Kanban/Kanban';
@@ -45,8 +44,7 @@ const App = () => {
                 <Route exact path="/kanbans" element= { <PublicKanbans /> } />
                 <Route exact path="/home" element={ <Home /> } />
                 <Route exact path="/home/kanban/:kid" element={ <Kanban /> } />
-                <Route exact path="/invited" element={ <Invited /> } />
-                <Route exact path="/invited/kanban/:kid" element={ <Kanban /> } />
+                <Route exact path="/public/kanban/:kid" element={ <Kanban /> } />
             </Routes>
 
             <footer>
